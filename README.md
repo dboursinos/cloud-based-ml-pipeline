@@ -3,7 +3,7 @@
 This repository contains a toolchain for training and deployment of machine learning models with all resources distributed on the cloud. One can use this toolchain with cloud services such as AWS and Azure or self-hosted on any server.
 
 The training process of machine learning models usually require many iterations of trial-and-error in order to find the best set of model architecture and hyperparameters that optimize specific metrics. Given the possible long times for each training iteration, it is critical to keep track not only of the models and hyperparameters used in each iteration but also different evaluation metrics that can contribute on the decision-making regarding the model deployment. Easy access to these metrics through cloud services is vital for easy collaboration and efficient development. 
-![](github.com/dboursinos/cloud-based-ml-pipeline/blob/main/Images/pipeline.svg) 
+![](https://github.com/dboursinos/cloud-based-ml-pipeline-/blob/main/Images/pipeline.svg) 
 ## Features
 - Machine Learning pipeline that can scale according to the computational resource needs. 
 - Easy access from everywhere to every training iteration and all parameters needed for reproducibility.
