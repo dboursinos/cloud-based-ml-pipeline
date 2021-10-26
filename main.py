@@ -127,8 +127,8 @@ if __name__ == "__main__":
     'num_classes':num_classes}
     ]
 
-    mlflow.create_experiment('exp4', artifact_location='s3://mlflow')
-    mlflow.set_experiment('exp4')
+    mlflow.create_experiment('exp1', artifact_location='s3://mlflow')
+    mlflow.set_experiment('exp1')
     for p in params:
         tf.keras.backend.clear_session()
         with mlflow.start_run() as run:
