@@ -1,0 +1,12 @@
+scikit-learn
+pyyaml
+pandas
+Pillow
+matplotlib
+seaborn
+mlflow
+minio
+tf2onnx
+boto3
+onnxruntime
+pymysql

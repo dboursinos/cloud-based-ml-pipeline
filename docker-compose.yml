@@ -1,0 +1,83 @@
+version: "3.7"
+
+services:
+  mysql-server:
+    image: mysql
+    restart: unless-stopped
+    volumes:
+      - mlflow_mysql_data:/var/lib/mysql
+    ports:
+      - 3306:3306
+    environment:
+      - MYSQL_DATABASE=${MYSQL_DATABASE}
+      - MYSQL_USER=${MYSQL_USER}
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}  
+
+  adminer_container:
+    image: adminer
+    environment:
+      ADMINER_DEFAULT_SERVER: mysql-server
+    ports:
+      - 8080:8080
+
+  mlflow-server:
+    image: cloud_compute
+    restart: unless-stopped
+    depends_on:
+      - "mysql-server"
+      - "s3-server"
+    ports:
+      - 5000:5000
+    command: mlflow server --backend-store-uri mysql+pymysql://${MYSQL_USER}:${MYSQL_PASSWORD}@mysql-server/${MYSQL_DATABASE} --default-artifact-root s3://mlflow -h 0.0.0.0
+
+  compute:
+    image: cloud_compute
+    container_name: ml_training
+    restart: unless-stopped
+    depends_on:
+      - "mlflow-server"
+      - "s3-server"
+    volumes:
+      - ${CODE_PATH}:/usr/src/app/code
+      - ${DATASET_PATH}:/usr/src/app/Dataset
+    environment:
+      AWS_ACCESS_KEY_ID: ${AWS_ACCESS_KEY_ID}
+      AWS_SECRET_ACCESS_KEY: ${AWS_SECRET_ACCESS_KEY}
+      AWS_REGION: ${AWS_REGION}
+      MLFLOW_S3_ENDPOINT_URL: http://s3-server:9000
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - capabilities: [gpu]
+    command: tail -f /dev/null
+
+  s3-server:
+    image: minio/minio
+    restart: unless-stopped
+    volumes:
+      - minio_data:/data
+    ports:
+      - 9000:9000
+      - 9001:9001
+    environment:
+      - MINIO_ACCESS_KEY=${AWS_ACCESS_KEY_ID}
+      - MINIO_SECRET_KEY=${AWS_SECRET_ACCESS_KEY}
+    command: server /data --console-address ":9001"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:9000/minio/health/live"]
+      interval: 30s
+      timeout: 20s
+      retries: 3
+
+volumes:
+  mlflow_mysql_data:
+    external: true
+  minio_data:
+    external: true
+
+
+
+
+    
