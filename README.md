@@ -17,12 +17,9 @@ The training process of machine learning models usually require many iterations 
 ## Setup guide
 Each service runs in a docker container. The demo here shows how all the containers can run on a single server using docker-compose but keep in mind that each of these services can be distributed on different servers. 
 
- 1. Build the docker image, inside the Docker folder, that runs the the ML model training and pull the images required to setup a Minio S3 server and the mysql server. This is based on the tensorflow-2.6-gpu image but this can be replaced with the non-gpu version.
+ 1. Build the docker image, inside the Docker folder. This is based on the tensorflow-2.6-gpu image but it can be replaced with the non-gpu version.
 ~~~
  docker build -t cloud_compute .
- docker pull mysql
- docker pull minio/minio
- docker pull adminer
 ~~~
  2. Replace the environment variables inside the .env file and run all the containers with `docker compose up`
  3. Enter the S3 server at http://host-ip:9000 and create 2 new buckets, 'dataset' and 'mlflow'. Replace host-ip with the ip of the remote computer or 'localhost' for a local server.
