@@ -73,9 +73,7 @@ services:
 
 volumes:
   mlflow_mysql_data:
-    external: true
   minio_data:
-    external: true
 
 
 
