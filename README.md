@@ -36,8 +36,8 @@ As part of this demo, I showcase how this toolchain can be used for development 
 
 The dataset used here is the German Traffic Sign Recognition Benchmark ([GTSRB](https://benchmark.ini.rub.de/)) and I apply an Inductive Conformal Prediction (ICP) based approach that we published in [Trusted Confidence Bounds for Learning Enabled Cyber-Physical Systems](https://arxiv.org/pdf/2003.05107.pdf). 
 
-In ICP one pick a bound/significance level on the error-rate according to some specifications and prediction sets of candidate classes are generated such that the error-rate remains lower or equal to the significance level. 
+In ICP, one picks a bound/significance level on the error-rate according to specifications of the particular application, and ICP generates prediction sets of candidate classes such that the error-rate remains lower or equal to the significance level. 
 
-As we present in our paper, we use a siamese network to map the image inputs into a lower-dimentional embedding representation where the Euclidean distance is a measure of similarity between the corresponding images.
+As we present in our paper, we use a siamese network to map the image inputs into a lower-dimentional embedding representation where the Euclidean distance is a measure of similarity between the corresponding images. This pipeline has been very useful in this application because we need to train models that generate embedding representations of different sizes, store evaluation metrics of each one of them and, finally, compare them and deploy the one that performs the best on our chosen evaluation metrics.
 
-The silhouette is a measure of how well the siamese network clusters the data. That's the metric used to retrieve and deploy the best model from the AWS S3.
+The silhouette is a measure of how well the siamese network clusters the data and that's the metric I used to retrieve and deploy the best model from the AWS S3 in this demo application.
