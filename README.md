@@ -15,9 +15,9 @@ The training process of machine learning models usually require many iterations 
 - Generates a TensorRT engine for NVIDIA hardware inference. 
 
 ## Setup guide
-Each service runs in a docker container. My showcase here shows how all the containers can run on a single server using docker-compose but keep in mind that each of these services can be distributed on different servers. 
+Each service runs in a docker container. The demo here shows how all the containers can run on a single server using docker-compose but keep in mind that each of these services can be distributed on different servers. 
 
- 1. Build the docker image that runs the the ML model training and pull the images required to setup a Minio S3 server and the mysql server. This is based on the tensorflow-2.6-gpu image but this can be replaced with the non-gpu version.
+ 1. Build the docker image, inside the Docker folder, that runs the the ML model training and pull the images required to setup a Minio S3 server and the mysql server. This is based on the tensorflow-2.6-gpu image but this can be replaced with the non-gpu version.
 ~~~
  docker build -t cloud_compute .
  docker pull mysql
@@ -40,4 +40,4 @@ In ICP one pick a bound/significance level on the error-rate according to some s
 
 As we present in our paper, we use a siamese network to map the image inputs into a lower-dimentional embedding representation where the Euclidean distance is a measure of similarity between the corresponding images.
 
-The silhouette is a measure of how well the siamese network clusters the data. That's the metric used to retrieve and deploy the best model from the S3.
+The silhouette is a measure of how well the siamese network clusters the data. That's the metric used to retrieve and deploy the best model from the AWS S3.
